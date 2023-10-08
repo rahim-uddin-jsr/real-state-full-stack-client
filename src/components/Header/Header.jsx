@@ -1,11 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
 import logoDark from "../../assets/images/logos/logo-dark.webp";
+import ThemeToggler from "../ThemeToggler/ThemeToggler";
 // import logoLight from "../../assets/images/logos/logo-light.webp";
 function Header() {
   const loggedin = "false";
   const handleSignOut = () => {};
   return (
-    <header className="shadow-sm">
+    <header className="shadow-sm bg-sky-500 dark:bg-green-500">
       <div className="container mx-auto flex w-full min-h-[74px] items-center font-medium">
         {/* for dark mood  */}
         {/* <img src={logoLight} alt="logo light" /> */}
@@ -63,6 +64,9 @@ function Header() {
                 Signout
               </button>
             )}
+            <div className="fixed top-60 left-5 transform -rotate-90 shadow-sm">
+              <ThemeToggler />
+            </div>
           </div>
         </div>
       </div>

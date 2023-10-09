@@ -1,8 +1,9 @@
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+import { signupSchema } from "../../Schema";
 import logo from "/favicon.ico";
 const Signup = () => {
-  const { values, errors, handleChange, handleSubmit, resetForm, touched } =
+  const { values, handleBlur, errors, handleChange, handleSubmit, touched } =
     useFormik({
       initialValues: {
         name: "",
@@ -11,6 +12,7 @@ const Signup = () => {
         confirm_password: "",
         acceptPrivacy: false,
       },
+      validationSchema: signupSchema,
       onSubmit: (values, actions) => {
         console.log("🚀 ~ file: Signup.jsx:14 ~ Signup ~ values:", values);
         alert(JSON.stringify(values, null, 2));
@@ -38,7 +40,11 @@ const Signup = () => {
               autoComplete="none"
               value={values.name}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
+            {touched.name && errors.name && (
+              <div className="text-red-500">{errors.name}</div>
+            )}
           </div>
           <div>
             <label className="font-medium" htmlFor="email">
@@ -51,7 +57,11 @@ const Signup = () => {
               value={values.email}
               id="email"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
+            {touched.email && errors.email && (
+              <div className="text-red-500">{errors.email}</div>
+            )}
           </div>
           <div>
             <label className="font-medium" htmlFor="password">
@@ -65,7 +75,11 @@ const Signup = () => {
               id="password"
               autoComplete="none"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
+            {touched.password && errors.password && (
+              <div className="text-red-500">{errors.password}</div>
+            )}
           </div>
           <div>
             <label className="font-medium" htmlFor="confirm_password">
@@ -79,7 +93,11 @@ const Signup = () => {
               id="confirm_password"
               autoComplete="none"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
+            {touched.confirm_password && errors.confirm_password && (
+              <div className="text-red-500">{errors.confirm_password}</div>
+            )}
           </div>
           <div>
             <input
@@ -89,6 +107,7 @@ const Signup = () => {
               value={values.acceptPrivacy}
               id="acceptPrivacy"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
             <label className="font-medium ms-2" htmlFor="acceptPrivacy">
               <span className="opacity-80">I accept</span>{" "}
@@ -96,6 +115,9 @@ const Signup = () => {
                 Terms and conditions
               </Link>
             </label>
+            {touched.acceptPrivacy && errors.acceptPrivacy && (
+              <div className="text-red-500">{errors.acceptPrivacy}</div>
+            )}
           </div>
           <button
             type="submit"

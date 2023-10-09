@@ -8,16 +8,19 @@ import MobileMenu from "./MobileMenu";
 function Header() {
   const [mobileSmMenu, setMobileSmMenu] = useState(false);
   const loggedin = "false";
+  console.log("🚀 ~ file: Header.jsx:11 ~ Header ~ loggedin:", loggedin);
+
   const handleSignOut = () => {};
   return (
     <header className="shadow-sm bg-white md:bg-transparent dark:bg-primary-dark">
       <div className="container mx-auto flex min-h-[74px] items-center font-medium ">
-        {/* for dark mood  */}
+        {/* for dark mode  */}
         <img
           className="max-h-7 hidden dark:block"
           src={logoLight}
           alt="logo light"
         />
+        {/* for light mode  */}
         <img className="max-h-7 dark:hidden" src={logoDark} alt="logo dark" />
         <div className="flex items-center justify-end w-3/4 ms-auto">
           <div className="me-auto hidden md:block">

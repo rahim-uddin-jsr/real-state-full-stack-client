@@ -8,6 +8,9 @@ export default {
         primary: "#fff",
         secondary: "#16A34A",
       },
+      backgroundImage: {
+        "signup-bg": "url('/src/assets/images/building.jpg')",
+      },
     },
   },
   plugins: [],

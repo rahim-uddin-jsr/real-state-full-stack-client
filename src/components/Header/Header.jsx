@@ -1,18 +1,26 @@
+import { Menu } from "@headlessui/react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logoDark from "../../assets/images/logos/logo-dark.webp";
+import logoLight from "../../assets/images/logos/logo-light.webp";
 import ThemeToggler from "../ThemeToggler/ThemeToggler";
-// import logoLight from "../../assets/images/logos/logo-light.webp";
+import MobileMenu from "./MobileMenu";
 function Header() {
+  const [mobileSmMenu, setMobileSmMenu] = useState(false);
   const loggedin = "false";
   const handleSignOut = () => {};
   return (
-    <header className="shadow-sm bg-sky-500 dark:bg-green-500">
-      <div className="container mx-auto flex w-full min-h-[74px] items-center font-medium">
+    <header className="shadow-sm bg-white md:bg-transparent dark:bg-primary-dark">
+      <div className="container mx-auto flex min-h-[74px] items-center font-medium ">
         {/* for dark mood  */}
-        {/* <img src={logoLight} alt="logo light" /> */}
-        <img className="max-h-7" src={logoDark} alt="logo dark" />
-        <div className="flex  items-center w-3/4 ms-auto">
-          <div className="me-auto">
+        <img
+          className="max-h-7 hidden dark:block"
+          src={logoLight}
+          alt="logo light"
+        />
+        <img className="max-h-7 dark:hidden" src={logoDark} alt="logo dark" />
+        <div className="flex items-center justify-end w-3/4 ms-auto">
+          <div className="me-auto hidden md:block">
             <NavLink
               style={{ padding: "0px 20px" }}
               className={({ isActive, isPending }) =>
@@ -40,7 +48,7 @@ function Header() {
             </NavLink>
           </div>
           <div className="flex gap-1">
-            <button className="rounded-full bg-green-400 w-10 h-10 flex justify-center items-center">
+            <button className="rounded-full bg-secondary w-10 h-10 flex justify-center items-center">
               <svg
                 className="w-4 h-4 fill-white  "
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,21 +60,64 @@ function Header() {
             {loggedin ? (
               <Link
                 to={`/signup`}
-                className="font-medium rounded-full text-white bg-green-400 px-6 h-10 flex justify-center items-center"
+                className="font-medium rounded-full text-white bg-secondary px-6 h-10 flex justify-center items-center"
               >
                 Signup
               </Link>
             ) : (
               <button
                 onClick={handleSignOut}
-                className="font-medium rounded-full text-white bg-green-400 px-6 h-10 flex justify-center items-center"
+                className="font-medium rounded-full text-white bg-secondary px-6 h-10 flex justify-center items-center"
               >
                 Signout
               </button>
             )}
+            <MobileMenu>
+              <Menu.Item>
+                <NavLink
+                  style={{ padding: "10px 0px" }}
+                  className={({ isActive, isPending }) =>
+                    isActive
+                      ? "border border-b-2 border-green-300 border-x-0 border-t-0"
+                      : isPending
+                      ? "pending text-green-500"
+                      : ""
+                  }
+                  to={`/`}
+                >
+                  <span className="mx-4">Home</span>
+                </NavLink>
+              </Menu.Item>{" "}
+              <Menu.Item>
+                <NavLink
+                  style={{ padding: "10px 0px" }}
+                  className={({ isActive, isPending }) =>
+                    isActive
+                      ? "border border-b-2 border-green-500 border-x-0 border-t-0"
+                      : isPending
+                      ? "pending"
+                      : ""
+                  }
+                  to={`/about`}
+                >
+                  <span className="px-4">About</span>
+                </NavLink>
+              </Menu.Item>
+            </MobileMenu>
+            <button
+              className="md:hidden"
+              onClick={() => setMobileSmMenu(!mobileSmMenu)}
+            ></button>
+
             <div className="fixed top-60 left-5 transform -rotate-90 shadow-sm">
               <ThemeToggler />
             </div>
+            {/* mobile menu  */}
+
+            {/* {mobileSmMenu && (
+              <div className="me-auto bg-white py-2 flex flex-col fixed md:hidden top-[74px] left-1/2 -translate-x-1/2 w-full "></div>
+            )} */}
+            {/* mobile menu end  */}
           </div>
         </div>
       </div>

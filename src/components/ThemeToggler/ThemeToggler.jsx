@@ -34,7 +34,6 @@ function ThemeToggler() {
       document.documentElement.classList.add("dark");
       setEnabled(true);
     }
-    console.log(enabled);
   }, [enabled]);
   return (
     <>

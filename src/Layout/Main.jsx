@@ -4,7 +4,9 @@ import Header from "../components/Header/Header";
 function Main() {
   return (
     <>
-      <Header />
+      <div className="fixed w-full">
+        <Header />
+      </div>
       <Outlet />
     </>
   );

@@ -1,8 +1,15 @@
+import axios from "axios";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import { signupSchema } from "../../Schema";
 import logo from "/favicon.ico";
 const Signup = () => {
+  const [error, setError] = useState("");
+  const [loading, serLoading] = useState(false);
+  const navigate = useNavigate();
+
   const { values, handleBlur, errors, handleChange, handleSubmit, touched } =
     useFormik({
       initialValues: {
@@ -14,9 +21,28 @@ const Signup = () => {
       },
       validationSchema: signupSchema,
       onSubmit: (values, actions) => {
-        console.log("🚀 ~ file: Signup.jsx:14 ~ Signup ~ values:", values);
-        alert(JSON.stringify(values, null, 2));
-        actions.resetForm();
+        serLoading(true);
+        setError("");
+        const data = {
+          username: values.name,
+          email: values.email,
+          password: values.password,
+        };
+        console.log("🚀 ~ file: Signup.jsx:14 ~ Signup ~ values:", data);
+        axios
+          .post("http://localhost:5000/api/auth/signup", data)
+          .then((res) => {
+            console.log("🚀 ~ file: Signup.jsx:21 ~ axios.post ~ res:", res);
+            serLoading(false);
+            actions.resetForm();
+            navigate("/signin");
+          })
+          .catch((err) => {
+            serLoading(false);
+            setError(err?.response?.data?.message);
+          });
+        serLoading(false);
+        setError("");
       },
     });
   return (
@@ -119,11 +145,13 @@ const Signup = () => {
               <div className="text-red-500">{errors.acceptPrivacy}</div>
             )}
           </div>
+          {error && <div className="text-red-500">{error}</div>}
           <button
+            disabled={!loading}
             type="submit"
             className="w-full bg-secondary py-2 rounded-md text-white font-semibold mt-3"
           >
-            Register
+            {!loading ? "Register" : "Loading..."}
           </button>
 
           <p className="text-center mt-3">
